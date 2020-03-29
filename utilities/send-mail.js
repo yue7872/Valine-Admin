@@ -70,7 +70,7 @@ exports.notice = (comment) => {
 #### [\[查看评论\]](${url})`
     if (process.env.SERVER_KEY != null) {
         request.post({
-            url: `https://sc.ftqq.com/${process.env.SCKEY}.send`,
+            url: `https://sc.ftqq.com/${process.env.SERVER_KEY}.send`,
             form: {
                 text: emailSubject,
                 desp: scContent
