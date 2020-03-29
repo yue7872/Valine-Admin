@@ -3,7 +3,7 @@ const nodemailer = require('nodemailer')
 const ejs = require('ejs')
 const fs = require('fs')
 const path = require('path')
-const axios = require('axios')
+const request = require('request')
 const querystring = require('querystring')
 
 const config = {
