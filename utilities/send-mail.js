@@ -3,7 +3,7 @@ const nodemailer = require('nodemailer')
 const ejs = require('ejs')
 const fs = require('fs')
 const path = require('path')
-const request = require('request')
+const axios = require('axios')
 
 const config = {
   auth: {
@@ -21,7 +21,7 @@ if (process.env.SMTP_SERVICE != null) {
 }
 
 const transporter = nodemailer.createTransport(config)
-const templateName = process.env.TEMPLATE_NAME ? process.env.TEMPLATE_NAME : 'default'
+const templateName = process.env.TEMPLATE_NAME ? process.env.TEMPLATE_NAME : 'rainbow'
 const noticeTemplate = ejs.compile(fs.readFileSync(path.resolve(process.cwd(), 'template', templateName, 'notice.ejs'), 'utf8'))
 const sendTemplate = ejs.compile(fs.readFileSync(path.resolve(process.cwd(), 'template', templateName, 'send.ejs'), 'utf8'))
 
@@ -29,7 +29,7 @@ const sendTemplate = ejs.compile(fs.readFileSync(path.resolve(process.cwd(), 'te
 exports.notice = (comment) => {
   // 站长自己发的评论不需要通知
   if (comment.get('mail') === process.env.TO_EMAIL ||
-        comment.get('mail') === process.env.SMTP_USER) {
+    comment.get('mail') === process.env.SMTP_USER) {
     return
   }
 
@@ -68,20 +68,21 @@ exports.notice = (comment) => {
 
 #### [\[查看评论\]](${url + '#post-comment'})`
   if (process.env.SERVER_KEY != null) {
-    request.post({
+    axios({
+      method: 'post',
       url: `https://sc.ftqq.com/${process.env.SERVER_KEY}.send`,
-      form: {
-        text: emailSubject,
-        desp: scContent
+      data: `text=${emailSubject}&desp=${scContent}`,
+      headers: {
+        'Content-type': 'application/x-www-form-urlencoded'
       }
-    }, function (error, response, body) {
-      if (error) {
-        console.log(error)
-        return
-      }
-      if (response.statusCode === 200 && JSON.parse(body).errmsg === 'success') console.log('已微信提醒站长')
-      else console.log(body)
     })
+      .then(function (response) {
+        if (response.status === 200 && response.data.errmsg === 'success') console.log('已微信提醒站长')
+        else console.log('微信提醒失败:', response.data)
+      })
+      .catch(function (error) {
+        console.log('微信提醒失败:', error)
+      })
   }
 }
 
@@ -89,7 +90,7 @@ exports.notice = (comment) => {
 exports.send = (currentComment, parentComment) => {
   // 站长被 @ 不需要提醒
   if (parentComment.get('mail') === process.env.TO_EMAIL ||
-        parentComment.get('mail') === process.env.SMTP_USER) {
+    parentComment.get('mail') === process.env.SMTP_USER) {
     return
   }
   const emailSubject = '👉 叮咚！「' + process.env.SITE_NAME + '」上有人@了你'

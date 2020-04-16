@@ -1,7 +1,7 @@
 const AV = require('leanengine')
 const mail = require('./utilities/send-mail')
 const Comment = AV.Object.extend('Comment')
-const request = require('request')
+const axios = require('axios')
 const spam = require('./utilities/check-spam')
 
 function sendNotification (currentComment, defaultIp) {
@@ -65,7 +65,11 @@ AV.Cloud.define('resend_mails', function (req) {
 })
 
 AV.Cloud.define('self_wake', function (req) {
-  request(process.env.ADMIN_URL, function (error, response, body) {
-    console.log('自唤醒任务执行成功，响应状态码为:', response && response.statusCode)
-  })
+  axios.get(process.env.ADMIN_URL)
+    .then(function (response) {
+      console.log('自唤醒任务执行成功，响应状态码为:', response && response.statusCode)
+    })
+    .catch(function (error) {
+      console.log('自唤醒任务执行失败:', error)
+    })
 })
