@@ -113,6 +113,10 @@ li {
   border-top: none;
 }
 
+.vcard:hover {
+  box-shadow: 2px 2px 6px #5f5f5f;
+}
+
 .check {
   padding-top: 1rem;
   color: #33b1ff;
