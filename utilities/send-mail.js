@@ -29,6 +29,7 @@ const sendTemplate = ejs.compile(fs.readFileSync(path.resolve(process.cwd(), 'te
 exports.notice = (comment) => {
   // 站长自己发的评论不需要通知
   if (comment.get('mail') === process.env.TO_EMAIL ||
+    comment.get('mail') === process.env.BLOGGER_EMAIL ||
     comment.get('mail') === process.env.SMTP_USER) {
     return
   }
@@ -48,7 +49,7 @@ exports.notice = (comment) => {
 
   const mailOptions = {
     from: '"' + process.env.SENDER_NAME + '" <' + process.env.SMTP_USER + '>',
-    to: process.env.TO_EMAIL ? process.env.TO_EMAIL : process.env.SMTP_USER,
+    to: process.env.TO_EMAIL || process.env.BLOGGER_EMAIL || process.env.SMTP_USER,
     subject: emailSubject,
     html: emailContent
   }
@@ -90,6 +91,7 @@ exports.notice = (comment) => {
 exports.send = (currentComment, parentComment) => {
   // 站长被 @ 不需要提醒
   if (parentComment.get('mail') === process.env.TO_EMAIL ||
+    parentComment.get('mail') === process.env.BLOGGER_EMAIL ||
     parentComment.get('mail') === process.env.SMTP_USER) {
     return
   }
