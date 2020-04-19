@@ -44,7 +44,7 @@ exports.notice = (comment) => {
     siteUrl: process.env.SITE_URL,
     name: name,
     text: text,
-    url: url + '#post-comment'
+    url: url + '#' + comment.get('objectId')
   })
 
   const mailOptions = {
@@ -67,7 +67,7 @@ exports.notice = (comment) => {
 #### ${name} 发表评论：${text}
 
 
-#### [\[查看评论\]](${url + '#post-comment'})`
+#### [\[查看评论\]](${url + '#' + comment.get('objectId')})`
   if (process.env.SERVER_KEY != null) {
     axios({
       method: 'post',
