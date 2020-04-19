@@ -58,18 +58,18 @@ AV.Cloud.define('resend_mails', function (req) {
       resolve(count)
     }).then((count) => {
       console.log(`昨日${count}条未成功发送的通知邮件处理完毕！`)
-    }).catch(() => {
-
+    }).catch((error) => {
+      console.error(`昨日未成功发送的通知邮件处理失败:`, error)
     })
   })
 })
 
 AV.Cloud.define('self_wake', function (req) {
-  axios.get(process.env.ADMIN_URL)
+  axios.get('http://'+process.env.ADMIN_URL)
     .then(function (response) {
-      console.log('自唤醒任务执行成功，响应状态码为:', response && response.statusCode)
+      console.log('自唤醒任务执行成功，响应状态码为:', response && response.status)
     })
     .catch(function (error) {
-      console.log('自唤醒任务执行失败:', error)
+      console.error('自唤醒任务执行失败:', error)
     })
 })
