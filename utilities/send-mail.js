@@ -4,6 +4,7 @@ const ejs = require('ejs')
 const fs = require('fs')
 const path = require('path')
 const axios = require('axios')
+const $ = require('cheerio')
 
 const config = {
   auth: {
@@ -63,12 +64,12 @@ exports.notice = (comment) => {
     console.log('收到一条评论, 已邮件提醒站长')
   })
 
-  const scContent = `
+  if (process.env.SERVER_KEY != null) {
+    const scContent = `
 #### ${name} 发表评论：${text}
 
 
 #### [\[查看评论\]](${url + '#' + comment.get('objectId')})`
-  if (process.env.SERVER_KEY != null) {
     axios({
       method: 'post',
       url: `https://sc.ftqq.com/${process.env.SERVER_KEY}.send`,
@@ -83,6 +84,25 @@ exports.notice = (comment) => {
       })
       .catch(function (error) {
         console.log('微信提醒失败:', error)
+      })
+  }
+
+  if (process.env.QMSG_KEY != null) {
+    const scContent = `[CQ:face,id=119]您的 ${process.env.SITE_NAME} 上有新评论了！
+[CQ:face,id=183]${name} 发表评论：
+
+[CQ:face,id=77][CQ:face,id=77][CQ:face,id=77][CQ:face,id=77][CQ:face,id=77]
+${$(text.replace(/  <img.*?src="(.*?)".*?>/g, "\n[图片]$1\n").replace(/<br>/g, "\n")).text().replace(/\n+/g, "\n").replace(/\n+$/g, "")}
+[CQ:face,id=76][CQ:face,id=76][CQ:face,id=76][CQ:face,id=76][CQ:face,id=76]
+
+[CQ:face,id=169]${url + '#' + comment.get('objectId')}`
+    axios.get(`https://qmsg.zendee.cn:443/send/${process.env.QMSG_KEY}.html?msg=${encodeURIComponent(scContent)}`)
+      .then(function (response) {
+        if (response.status === 200 && response.data.success === true) console.log('已QQ提醒站长')
+        else console.log('QQ提醒失败:', response.data)
+      })
+      .catch(function (error) {
+        console.log('QQ提醒失败:', error)
       })
   }
 }

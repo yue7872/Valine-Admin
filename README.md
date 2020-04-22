@@ -30,8 +30,8 @@ SENDER_EMAIL | xxxxxx@qq.com | [必填]发件邮箱
 ADMIN_URL | https://xxx.leanapp.cn/ | [建议]Web主机二级域名，用于自动唤醒
 BLOGGER_EMAIL | xxxxx@gmail.com | [可选]博主通知收件地址，默认使用SENDER_EMAIL
 AKISMET_KEY | xxxxxxxxxxxx | [可选]Akismet Key 用于垃圾评论检测，设为MANUAL_REVIEW开启人工审核，留空不使用反垃圾
-SERVER_KEY | SCUxxxxxxxx | [可选][Server酱](http://sc.ftqq.com/) SCKEY 用于微信通知，
-
+SERVER_KEY | SCUxxxxxxxx | [可选][Server酱](http://sc.ftqq.com/) SCKEY 用于微信通知
+QMSG_KEY | xxxxxxxx| [可选][Qmsg](https://qmsg.zendee.cn/) key 用于QQ通知
 </div>
     
 **以上必填参数请务必正确设置。**
