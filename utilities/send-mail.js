@@ -61,6 +61,7 @@ exports.notice = (comment) => {
         return console.log(error)
       }
       comment.set('isNotified', true)
+      comment.set('mailNotified', true)
       comment.save()
       console.log('收到一条评论, 已邮件提醒站长')
     })
@@ -82,8 +83,13 @@ ${text}
       }
     })
       .then(function (response) {
-        if (response.status === 200 && response.data.errmsg === 'success') console.log('已微信提醒站长')
-        else console.log('微信提醒失败:', response.data)
+        if (response.status === 200 && response.data.errmsg === 'success') {
+          comment.set('isNotified', true)
+          comment.set('wechatNotified', true)
+          console.log('已微信提醒站长')
+        } else {
+          console.log('微信提醒失败:', response.data)
+        }
       })
       .catch(function (error) {
         console.log('微信提醒失败:', error)
@@ -101,8 +107,13 @@ ${$(text.replace(/  <img.*?src="(.*?)".*?>/g, "\n[图片]$1\n").replace(/<br>/g,
 [CQ:face,id=169]${url + '#' + comment.get('objectId')}`
     axios.get(`https://qmsg.zendee.cn:443/send/${process.env.QMSG_KEY}.html?msg=${encodeURIComponent(scContent)}`)
       .then(function (response) {
-        if (response.status === 200 && response.data.success === true) console.log('已QQ提醒站长')
-        else console.log('QQ提醒失败:', response.data)
+        if (response.status === 200 && response.data.success === true) {
+          comment.set('isNotified', true)
+          comment.set('qqNotified', true)
+          console.log('已QQ提醒站长')
+        } else {
+          console.log('QQ提醒失败:', response.data)
+        }
       })
       .catch(function (error) {
         console.log('QQ提醒失败:', error)

@@ -97,6 +97,8 @@ li {
   line-height: 1.8;
   border: 1px dashed aqua;
   padding: 5px;
+  word-wrap: break-word;
+  word-break: break-all;
 }
 
 .vcomment>p {

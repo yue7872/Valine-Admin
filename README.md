@@ -30,8 +30,10 @@ SENDER_EMAIL | xxxxxx@qq.com | [必填]发件邮箱
 ADMIN_URL | https://xxx.leanapp.cn/ | [建议]Web主机二级域名，用于自动唤醒
 BLOGGER_EMAIL | xxxxx@gmail.com | [可选]博主通知收件地址，默认使用SENDER_EMAIL
 AKISMET_KEY | xxxxxxxxxxxx | [可选]Akismet Key 用于垃圾评论检测，设为MANUAL_REVIEW开启人工审核，留空不使用反垃圾
+以下为本仓库新增 | 以下为本仓库新增 | 以下为本仓库新增
 SERVER_KEY | SCUxxxxxxxx | [可选][Server酱](http://sc.ftqq.com/) SCKEY 用于微信通知
 QMSG_KEY | xxxxxxxx| [可选][Qmsg](https://qmsg.zendee.cn/) key 用于QQ通知
+DISABLE_EMAIL | true| [可选]禁止邮件通知博主，@仍然会提醒
 </div>
     
 **以上必填参数请务必正确设置。**
@@ -39,6 +41,9 @@ QMSG_KEY | xxxxxxxx| [可选][Qmsg](https://qmsg.zendee.cn/) key 用于QQ通知
 二级域名用于评论后台管理，如[https://deserts.leanapp.cn](https://deserts.leanapp.cn) 。
 
 ![二级域名](https://cloud.panjunwen.com/2018/09/ping-mu-kuai-zhao-2018-09-15-xia-wu-1-06-41.png)
+
+![QQ](https://cdn.jsdelivr.net/gh/HCLonely/Valine-Admin@master/demo/qq.jpg)
+![微信](https://cdn.jsdelivr.net/gh/HCLonely/Valine-Admin@master/demo/wechat.jpg)
 
  3. 切换到部署标签页，分支使用master，点击部署即可
 

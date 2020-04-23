@@ -47,11 +47,22 @@
                 <span class="spacer">•</span>
                 <a class="blue" href="<%= process.env.SITE_URL+comment_list[i].get('url')+'#' + comment_list[i].get('objectId') %>" target="_blank" rel="nofollow">查看评论</a>
                 <% if (comment_list[i].get('rid')) { %>
-                <% if(comment_list[i].get('isNotified')) { %>
+                <% if (comment_list[i].get('isNotified')) { %>
+                <% if (comment_list[i].get('mailNotified')) { %>
+                <span class="spacer">•</span><span class="vnoticed">已邮件通知✔</span>
+                <% } %>
+                <% if (comment_list[i].get('wechatNotified')) { %>
+                <span class="spacer">•</span><span class="vnoticed">已微信通知✔</span>
+                <% } %>
+                <% if(comment_list[i].get('qqNotified')) { %>
+                <span class="spacer">•</span><span class="vnoticed">已QQ通知✔</span>
+                <% } %>
+                <% if(!comment_list[i].get('qqNotified')&&!comment_list[i].get('wechatNotified')&&!comment_list[i].get('mailNotified')) { %>
                 <span class="spacer">•</span><span class="vnoticed">通知已送达✔</span>
+                <% } %>
                 <% } else { %>
                 <span class="spacer">•</span>
-                <a href="/comments/resend-email?id=<%= comment_list[i].get('objectId') %>" rel="nofollow">重发通知邮件</a>
+                <a href="/comments/resend-email?id=<%= comment_list[i].get('objectId') %>" rel="nofollow">重新通知</a>
                 <% } %>
                 <% } %>
             </div>
