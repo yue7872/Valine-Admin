@@ -39,41 +39,44 @@ exports.notice = (comment) => {
   const text = comment.get('comment')
   const url = process.env.SITE_URL + comment.get('url')
 
-  const emailSubject = '👉 咚！「' + process.env.SITE_NAME + '」上有新评论了'
-  const emailContent = noticeTemplate({
-    siteName: process.env.SITE_NAME,
-    siteUrl: process.env.SITE_URL,
-    name: name,
-    text: text,
-    url: url + '#' + comment.get('objectId')
-  })
+  if (!process.env.DISABLE_EMAIL) {
+    const emailSubject = '👉 咚！「' + process.env.SITE_NAME + '」上有新评论了'
+    const emailContent = noticeTemplate({
+      siteName: process.env.SITE_NAME,
+      siteUrl: process.env.SITE_URL,
+      name: name,
+      text: text,
+      url: url + '#' + comment.get('objectId')
+    })
 
-  const mailOptions = {
-    from: '"' + process.env.SENDER_NAME + '" <' + process.env.SMTP_USER + '>',
-    to: process.env.TO_EMAIL || process.env.BLOGGER_EMAIL || process.env.SMTP_USER,
-    subject: emailSubject,
-    html: emailContent
-  }
-
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      return console.log(error)
+    const mailOptions = {
+      from: '"' + process.env.SENDER_NAME + '" <' + process.env.SMTP_USER + '>',
+      to: process.env.TO_EMAIL || process.env.BLOGGER_EMAIL || process.env.SMTP_USER,
+      subject: emailSubject,
+      html: emailContent
     }
-    comment.set('isNotified', true)
-    comment.save()
-    console.log('收到一条评论, 已邮件提醒站长')
-  })
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        return console.log(error)
+      }
+      comment.set('isNotified', true)
+      comment.save()
+      console.log('收到一条评论, 已邮件提醒站长')
+    })
+  }
 
   if (process.env.SERVER_KEY != null) {
     const scContent = `
-#### ${name} 发表评论：${text}
+#### ${name} 发表评论：
 
+${text}
 
 #### [\[查看评论\]](${url + '#' + comment.get('objectId')})`
     axios({
       method: 'post',
       url: `https://sc.ftqq.com/${process.env.SERVER_KEY}.send`,
-      data: `text=${emailSubject}&desp=${scContent}`,
+      data: `text=咚！「${process.env.SITE_NAME}」上有新评论了&desp=${scContent}`,
       headers: {
         'Content-type': 'application/x-www-form-urlencoded'
       }
