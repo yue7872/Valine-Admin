@@ -33,7 +33,7 @@ AKISMET_KEY | xxxxxxxxxxxx | [可选]Akismet Key 用于垃圾评论检测，设�
 以下为本仓库新增 | 以下为本仓库新增 | 以下为本仓库新增
 SERVER_KEY | SCUxxxxxxxx | [可选][Server酱](http://sc.ftqq.com/) SCKEY 用于微信通知
 QMSG_KEY | xxxxxxxx| [可选][Qmsg](https://qmsg.zendee.cn/) key 用于QQ通知
-DISABLE_EMAIL | true| [可选]禁止邮件通知博主，@仍然会提醒
+DISABLE_EMAIL | true| [可选]禁止邮件通知**博主**，@仍然会提醒
 </div>
     
 **以上必填参数请务必正确设置。**
