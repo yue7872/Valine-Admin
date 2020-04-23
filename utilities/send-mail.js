@@ -97,6 +97,19 @@ ${text}
   }
 
   if (process.env.QMSG_KEY != null) {
+    if (process.env.QQ_SHAKE != null){
+      axios.get(`https://qmsg.zendee.cn:443/send/${process.env.QMSG_KEY}.html?msg=${encodeURIComponent('[CQ:shake]')}`)
+        .then(function (response) {
+          if (response.status === 200 && response.data.success === true) {
+            console.log('已发送QQ戳一戳')
+          } else {
+            console.log('发送QQ戳一戳失败:', response.data)
+          }
+        })
+        .catch(function (error) {
+          console.log('发送QQ戳一戳失败:', error)
+        })
+    }
     const scContent = `[CQ:face,id=119]您的 ${process.env.SITE_NAME} 上有新评论了！
 [CQ:face,id=183]${name} 发表评论：
 
