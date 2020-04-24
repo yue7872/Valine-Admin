@@ -83,6 +83,45 @@ DISABLE_EMAIL | true | [可选]禁止邮件通知**博主**，@仍然会提醒
 **至此，Valine Admin 已经可以正常工作，更多以下是可选的进阶配置。**
 -----------------
 
+### 邮件通知模板
+
+邮件通知模板在云引擎环境变量中设定，可自定义通知邮件标题及内容模板。
+
+环境变量 | 示例 | 说明
+--- | ------ | ------
+MAIL_SUBJECT | ${PARENT_NICK}，您在${SITE_NAME}上的评论收到了回复 | [可选]@通知邮件主题（标题）模板
+MAIL_TEMPLATE | 见下文 | [可选]@通知邮件内容模板
+MAIL_SUBJECT_ADMIN | ${SITE_NAME}上有新评论了 | [可选]博主邮件通知主题模板
+MAIL_TEMPLATE_ADMIN | 见下文 | [可选]博主邮件通知内容模板
+
+邮件通知包含两种，分别是被@通知和博主通知，这两种模板都可以完全自定义。默认使用经典的蓝色风格模板（样式来源未知）。
+
+默认被@通知邮件内容模板如下：
+
+```html
+<html> <head></head> <body> <table style="width: 99.8%;height:99.8% "> <tbody> <tr> <td> <div style="border-radius: 10px 10px 10px 10px;font-size:13px;    color: #555555;width: 666px;font-family:'Century Gothic','Trebuchet MS','Hiragino Sans GB',微软雅黑,'Microsoft Yahei',Tahoma,Helvetica,Arial,'SimSun',sans-serif;margin:50px auto;border:1px solid #eee;max-width:100%;background: #ffffff repeating-linear-gradient(-45deg,#fff,#fff 1.125rem,transparent 1.125rem,transparent 2.25rem);box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);"> <div style="width:100%;background:#49BDAD;color:#ffffff;border-radius: 10px 10px 0 0;background-image: -moz-linear-gradient(0deg, rgb(67, 198, 184), rgb(255, 209, 244));background-image: -webkit-linear-gradient(0deg, rgb(67, 198, 184), rgb(255, 209, 244));height: 66px;"> <p style="font-size:15px;word-break:break-all;padding: 23px 32px;margin:0;background-color: hsla(0,0%,100%,.4);border-radius: 10px 10px 0 0;">您在<a style="text-decoration:none;color: #ffffff;" href="<%=siteUrl%>"> <%=siteName%> </a>上的留言有新回复啦！ </p> </div> <div style="margin:40px auto;width:90%"> <p><%=pname%> 同学，您曾在文章上发表评论：</p> <div style="background: #fafafa repeating-linear-gradient(-45deg,#fff,#fff 1.125rem,transparent 1.125rem,transparent 2.25rem);box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);margin:20px 0px;padding:15px;border-radius:5px;font-size:14px;color:#555555;"><%-ptext%></div> <p><%=name%> 给您的回复如下：</p> <div style="background: #fafafa repeating-linear-gradient(-45deg,#fff,#fff 1.125rem,transparent 1.125rem,transparent 2.25rem);box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);margin:20px 0px;padding:15px;border-radius:5px;font-size:14px;color:#555555;"><%-text%></div> <p>您可以点击 <a style="text-decoration:none; color:#12addb" href="<%=url%>">查看回复的完整內容 </a>，欢迎再次光临 <a style="text-decoration:none; color:#12addb" href="<%=siteUrl%>"> <%=siteName%> </a>。</p> <style type="text/css">a:link{text-decoration:none}a:visited{text-decoration:none}a:hover{text-decoration:none}a:active{text-decoration:none}</style> </div> </div> </td> </tr> </tbody> </table> </body> </html>
+```
+
+@通知模板中的可用变量如下（注，这是邮件模板变量，请勿与云引擎环境变量混淆）：
+
+模板变量 | 说明
+----|----
+<%=siteName%> | 博客名称
+<%=siteUrl%> | 博客首页地址
+<%=url%> | 文章地址（完整路径）
+<%=pname%> | 收件人昵称（被@者，父级评论人）
+<%-ptext%> | 父级评论内容
+<%=name%> | 新评论者昵称
+<%-text%> | 新评论内容
+
+默认博主通知邮件内容模板如下：
+
+```html
+<html> <head> <style> .wrap span { display: inline-block; } .w260{ width: 260px;} .w20{ width: 20px;} .wauto{ width: auto;} </style> </head> <body> <table style="width: 99.8%;height:99.8% "> <tbody> <tr> <td> <div style="border-radius: 10px 10px 10px 10px;font-size:13px;    color: #555555;width: 666px;font-family:'Century Gothic','Trebuchet MS','Hiragino Sans GB',微软雅黑,'Microsoft Yahei',Tahoma,Helvetica,Arial,'SimSun',sans-serif;margin:50px auto;border:1px solid #eee;max-width:100%;background: #ffffff repeating-linear-gradient(-45deg,#fff,#fff 1.125rem,transparent 1.125rem,transparent 2.25rem);box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);"> <div style="width:100%;background:#49BDAD;color:#ffffff;border-radius: 10px 10px 0 0;background-image: -moz-linear-gradient(0deg, rgb(67, 198, 184), rgb(255, 209, 244));background-image: -webkit-linear-gradient(0deg, rgb(67, 198, 184), rgb(255, 209, 244));height: 66px;"> <p style="font-size:15px;word-break:break-all;padding: 23px 32px;margin:0;background-color: hsla(0,0%,100%,.4);border-radius: 10px 10px 0 0;">您的<a style="text-decoration:none;color: #ffffff;" href="<%=siteUrl%>"> <%=siteName%> </a>上有新的评论啦！ </p> </div> <div style="margin:40px auto;width:90%"> <p><%=name%> 发表评论：</p> <div style="background: #fafafa repeating-linear-gradient(-45deg,#fff,#fff 1.125rem,transparent 1.125rem,transparent 2.25rem);box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);margin:20px 0px;padding:15px;border-radius:5px;font-size:14px;color:#555555;"><%-text%></div> <p><a style="text-decoration:none; color:#12addb" href="<%=url%>" target="_blank">[查看评论]</a></p> <style type="text/css">a:link{text-decoration:none}a:visited{text-decoration:none}a:hover{text-decoration:none}a:active{text-decoration:none}</style> </div> </div> </td> </tr> </tbody> </table> </body> </html>
+```
+
+博主通知邮件模板中的可用变量与@通知中的基本一致，**```<%=pname%>``` 和 ```<%-ptext%>``` 变量不再可用。**
+
 ## 垃圾评论检测
 
 > Akismet (Automattic Kismet)是应用广泛的一个垃圾留言过滤系统，其作者是大名鼎鼎的WordPress 创始人 Matt Mullenweg，Akismet也是WordPress默认安装的插件，其使用非常广泛，设计目标便是帮助博客网站来过滤留言Spam。有了Akismet之后，基本上不用担心垃圾留言的烦恼了。

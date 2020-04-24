@@ -23,8 +23,8 @@ if (process.env.SMTP_SERVICE != null) {
 
 const transporter = nodemailer.createTransport(config)
 const templateName = process.env.TEMPLATE_NAME ? process.env.TEMPLATE_NAME : 'rainbow'
-const noticeTemplate = ejs.compile(fs.readFileSync(path.resolve(process.cwd(), 'template', templateName, 'notice.ejs'), 'utf8'))
-const sendTemplate = ejs.compile(fs.readFileSync(path.resolve(process.cwd(), 'template', templateName, 'send.ejs'), 'utf8'))
+const noticeTemplate = process.env.MAIL_TEMPLATE_ADMIN ? ejs.compile(process.env.MAIL_TEMPLATE_ADMIN) : ejs.compile(fs.readFileSync(path.resolve(process.cwd(), 'template', templateName, 'notice.ejs'), 'utf8'))
+const sendTemplate = process.env.MAIL_TEMPLATE ? ejs.compile(process.env.MAIL_TEMPLATE) : ejs.compile(fs.readFileSync(path.resolve(process.cwd(), 'template', templateName, 'send.ejs'), 'utf8'))
 
 // 提醒站长
 exports.notice = (comment) => {
@@ -40,7 +40,7 @@ exports.notice = (comment) => {
   const url = process.env.SITE_URL + comment.get('url')
 
   if (!process.env.DISABLE_EMAIL) {
-    const emailSubject = '👉 咚！「' + process.env.SITE_NAME + '」上有新评论了'
+    const emailSubject = process.env.MAIL_SUBJECT_ADMIN ? eval('`' + process.env.MAIL_SUBJECT_ADMIN + '`') : '👉 咚！「' + process.env.SITE_NAME + '」上有新评论了'
     const emailContent = noticeTemplate({
       siteName: process.env.SITE_NAME,
       siteUrl: process.env.SITE_URL,
@@ -95,9 +95,8 @@ ${text}
         console.log('微信提醒失败:', error)
       })
   }
-
   if (process.env.QMSG_KEY != null) {
-    if (process.env.QQ_SHAKE != null){
+    if (process.env.QQ_SHAKE != null) {
       axios.get(`https://qmsg.zendee.cn:443/send/${process.env.QMSG_KEY}.html?msg=${encodeURIComponent('[CQ:shake]')}`)
         .then(function (response) {
           if (response.status === 200 && response.data.success === true) {
@@ -132,6 +131,7 @@ ${$(text.replace(/  <img.*?src="(.*?)".*?>/g, "\n[图片]$1\n").replace(/<br>/g,
         console.log('QQ提醒失败:', error)
       })
   }
+
 }
 
 // 发送邮件通知他人
@@ -142,7 +142,7 @@ exports.send = (currentComment, parentComment) => {
     parentComment.get('mail') === process.env.SMTP_USER) {
     return
   }
-  const emailSubject = '👉 叮咚！「' + process.env.SITE_NAME + '」上有人@了你'
+  const emailSubject = process.env.MAIL_SUBJECT ? eval('`' + process.env.MAIL_SUBJECT + '`') : '👉 叮咚！「' + process.env.SITE_NAME + '」上有人@了你'
   const emailContent = sendTemplate({
     siteName: process.env.SITE_NAME,
     siteUrl: process.env.SITE_URL,
