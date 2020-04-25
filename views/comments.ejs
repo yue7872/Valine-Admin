@@ -46,7 +46,6 @@
                 <a class="red" href="/comments/delete?id=<%= comment_list[i].get('objectId') %>" rel="nofollow">删除</a>
                 <span class="spacer">•</span>
                 <a class="blue" href="<%= process.env.SITE_URL+comment_list[i].get('url')+'#' + comment_list[i].get('objectId') %>" target="_blank" rel="nofollow">查看评论</a>
-                <% if (comment_list[i].get('rid')) { %>
                 <% if (comment_list[i].get('isNotified')) { %>
                 <% if (comment_list[i].get('mailNotified')) { %>
                 <span class="spacer">•</span><span class="vnoticed">已邮件通知✔</span>
@@ -63,7 +62,6 @@
                 <% } else { %>
                 <span class="spacer">•</span>
                 <a href="/comments/resend-email?id=<%= comment_list[i].get('objectId') %>" rel="nofollow">重新通知</a>
-                <% } %>
                 <% } %>
             </div>
 
