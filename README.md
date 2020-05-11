@@ -10,11 +10,11 @@ Valine Admin 是 [Valine 评论系统](https://deserts.io/diy-a-comment-system/)
 
  1. 在[Leancloud](https://leancloud.cn/dashboard/#/apps)云引擎设置界面，填写代码库并保存：https://github.com/DesertsP/Valine-Admin.git
 
-![设置仓库](https://cloud.panjunwen.com/2018/09/ping-mu-kuai-zhao-2018-09-15-xia-wu-12-56-04.png)
+![设置仓库](https://cdn.jsdelivr.net/gh/HCLonely/Valine-Admin@master/demo/ping-mu-kuai-zhao-2018-09-15-xia-wu-12-56-04.png)
 
  2. 在设置页面，设置环境变量以及 Web 二级域名。
 
-![环境变量](https://cloud.panjunwen.com/2018/09/ping-mu-kuai-zhao-2018-09-15-xia-wu-3-40-48.png)
+![环境变量](https://cdn.jsdelivr.net/gh/HCLonely/Valine-Admin@master/demo/ping-mu-kuai-zhao-2018-09-15-xia-wu-3-40-48.png)
 
 <div class="table-wrap">
 
@@ -41,18 +41,18 @@ DISABLE_EMAIL | true | [可选]禁止邮件通知**博主**，@仍然会提醒
 
 二级域名用于评论后台管理，如[https://deserts.leanapp.cn](https://deserts.leanapp.cn) 。
 
-![二级域名](https://cloud.panjunwen.com/2018/09/ping-mu-kuai-zhao-2018-09-15-xia-wu-1-06-41.png)
+![二级域名](https://cdn.jsdelivr.net/gh/HCLonely/Valine-Admin@master/demo/ping-mu-kuai-zhao-2018-09-15-xia-wu-1-06-41.png)
 
 ![QQ](https://cdn.jsdelivr.net/gh/HCLonely/Valine-Admin@master/demo/qq.jpg)
 ![微信](https://cdn.jsdelivr.net/gh/HCLonely/Valine-Admin@master/demo/wechat.jpg)
 
  3. 切换到部署标签页，分支使用master，点击部署即可
 
-![一键部署](https://cloud.panjunwen.com/2018/09/ping-mu-kuai-zhao-2018-09-15-xia-wu-12-56-50.png)
+![一键部署](https://cdn.jsdelivr.net/gh/HCLonely/Valine-Admin@master/demo/ping-mu-kuai-zhao-2018-09-15-xia-wu-12-56-50.png)
 
 第一次部署需要花点时间。
 
-![部署过程](https://cloud.panjunwen.com/2018/09/ping-mu-kuai-zhao-2018-09-15-xia-wu-1-00-45.png)
+![部署过程](https://cdn.jsdelivr.net/gh/HCLonely/Valine-Admin@master/demo/ping-mu-kuai-zhao-2018-09-15-xia-wu-1-00-45.png)
 
  4. 评论管理。访问设置的二级域名`https://二级域名.leanapp.cn/sign-up`，注册管理员登录信息，如：[https://deserts.leanapp.cn/sign-up](https://deserts.leanapp.cn/sign-up) 
     <img src="https://cloud.panjunwen.com/2018/10/ping-mu-kuai-zhao-2018-10-22-xia-wu-9-35-51.png" alt="管理员注册" style="
@@ -150,7 +150,7 @@ AKISMET_KEY | xxxxxxxxxxxx | [可选]Akismet Key 用于垃圾评论检测
 - 部署失败，请在评论中附图，或去Github发起Issue
 - 邮件发送失败，确保环境变量都没问题后，重启云引擎
   
-    ![重启云引擎](https://cloud.panjunwen.com/2018/09/ping-mu-kuai-zhao-2018-09-15-xia-wu-5-22-56.png)
+    ![重启云引擎](https://cdn.jsdelivr.net/gh/HCLonely/Valine-Admin@master/demo/ping-mu-kuai-zhao-2018-09-15-xia-wu-5-22-56.png)
     
 - 博主通知模板中不要出现`PARENT*`相关参数（请勿混用模板）
 
