@@ -34,7 +34,7 @@ app.use(cookieParser())
 app.use(AV.Cloud.CookieSession({ secret: 'my secret', maxAge: 3600000, fetchUser: true }))
 
 app.get('/', function (req, res) {
-  console.log(req.ip + ' 访问评论后台')
+  console.log('访问评论后台')
   if (req.currentUser) {
     res.redirect('/comments')
   } else {
