@@ -58,7 +58,7 @@ exports.notice = (comment) => {
 
     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
-        return console.log(error)
+        return console.error(error)
       }
       comment.set('isNotified', true)
       comment.set('mailNotified', true)
@@ -88,11 +88,11 @@ ${text}
           comment.set('wechatNotified', true)
           console.log('已微信提醒站长')
         } else {
-          console.log('微信提醒失败:', response.data)
+          console.warn('微信提醒失败:', response.data)
         }
       })
       .catch(function (error) {
-        console.log('微信提醒失败:', error)
+        console.error('微信提醒失败:', error.message)
       })
   }
   if (process.env.QMSG_KEY != null) {
@@ -102,11 +102,11 @@ ${text}
           if (response.status === 200 && response.data.success === true) {
             console.log('已发送QQ戳一戳')
           } else {
-            console.log('发送QQ戳一戳失败:', response.data)
+            console.warn('发送QQ戳一戳失败:', response.data)
           }
         })
         .catch(function (error) {
-          console.log('发送QQ戳一戳失败:', error)
+          console.error('发送QQ戳一戳失败:', error.message)
         })
     }
     const scContent = `[CQ:face,id=119]您的 ${process.env.SITE_NAME} 上有新评论了！
@@ -124,11 +124,11 @@ ${$(text.replace(/  <img.*?src="(.*?)".*?>/g, "\n[图片]$1\n").replace(/<br>/g,
           comment.set('qqNotified', true)
           console.log('已QQ提醒站长')
         } else {
-          console.log('QQ提醒失败:', response.data)
+          console.warn('QQ提醒失败:', response.data)
         }
       })
       .catch(function (error) {
-        console.log('QQ提醒失败:', error)
+        console.error('QQ提醒失败:', error.message)
       })
   }
 
@@ -161,7 +161,7 @@ exports.send = (currentComment, parentComment) => {
 
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
-      return console.log(error)
+      return console.error(error)
     }
     currentComment.set('isNotified', true)
     currentComment.save()
