@@ -40,9 +40,10 @@ exports.notice = (comment) => {
   const url = process.env.SITE_URL + comment.get('url')
 
   if (!process.env.DISABLE_EMAIL) {
-    const emailSubject = process.env.MAIL_SUBJECT_ADMIN ? eval('`' + process.env.MAIL_SUBJECT_ADMIN + '`') : '👉 咚！「' + process.env.SITE_NAME + '」上有新评论了'
+    const SITE_NAME = process.env.SITE_NAME
+    const emailSubject = process.env.MAIL_SUBJECT_ADMIN ? eval('`' + process.env.MAIL_SUBJECT_ADMIN + '`') : '👉 咚！「' + SITE_NAME + '」上有新评论了'
     const emailContent = noticeTemplate({
-      siteName: process.env.SITE_NAME,
+      siteName: SITE_NAME,
       siteUrl: process.env.SITE_URL,
       name: name,
       text: text,
@@ -141,9 +142,11 @@ exports.send = (currentComment, parentComment) => {
     parentComment.get('mail') === process.env.SMTP_USER) {
     return
   }
-  const emailSubject = process.env.MAIL_SUBJECT ? eval('`' + process.env.MAIL_SUBJECT + '`') : '👉 叮咚！「' + process.env.SITE_NAME + '」上有人@了你'
+  const PARENT_NICK = parentComment.get('nick')
+  const SITE_NAME = process.env.SITE_NAME
+  const emailSubject = process.env.MAIL_SUBJECT ? eval('`' + process.env.MAIL_SUBJECT + '`') : '👉 叮咚！「' + SITE_NAME + '」上有人@了你'
   const emailContent = sendTemplate({
-    siteName: process.env.SITE_NAME,
+    siteName: SITE_NAME,
     siteUrl: process.env.SITE_URL,
     pname: parentComment.get('nick'),
     ptext: parentComment.get('comment'),
