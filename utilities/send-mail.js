@@ -99,7 +99,7 @@ ${text}
   if (process.env.QMSG_KEY != null) {
     /*
     if (process.env.QQ_SHAKE != null) {
-      axios.get(`https://qmsg.zendee.cn:443/send/${process.env.QMSG_KEY}.html?msg=${encodeURIComponent('[CQ:shake]')}`)
+      axios.get(`https://qmsg.zendee.cn:443/send/${process.env.QMSG_KEY}?msg=${encodeURIComponent('[CQ:shake]')}`)
         .then(function (response) {
           if (response.status === 200 && response.data.success === true) {
             console.log('已发送QQ戳一戳')
