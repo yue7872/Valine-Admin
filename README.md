@@ -32,6 +32,8 @@ BLOGGER_EMAIL | xxxxx@gmail.com | [可选]博主通知收件地址，默认使�
 AKISMET_KEY | xxxxxxxxxxxx | [可选]Akismet Key 用于垃圾评论检测，设为MANUAL_REVIEW开启人工审核，留空不使用反垃圾
 以下为本仓库新增 | 以下为本仓库新增 | 以下为本仓库新增
 SERVER_KEY | SCUxxxxxxxx | [可选][Server酱](http://sc.ftqq.com/) SCKEY 用于微信通知
+SERVER_TURBO_KEY | SCTxxxxxxxx | [可选][Server酱·Turbo版](https://sct.ftqq.com/) SendKey 用于微信通知
+SERVER_TURBO_MD | true | [可选]使用[Server酱·Turbo版](https://sct.ftqq.com/)通知时是否使用 MD 模板，默认为`false`
 QMSG_KEY | xxxxxxxx | [可选][Qmsg](https://qmsg.zendee.cn/) key 用于QQ通知
 QQ_SHAKE(已失效) | true | [可选]QQ通知时发送一个`戳一戳`，需启用QQ通知
 DISABLE_EMAIL | true | [可选]禁止邮件通知**博主**，@仍然会提醒

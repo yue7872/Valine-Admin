@@ -96,6 +96,39 @@ ${text}
         console.error('微信提醒失败:', error.message)
       })
   }
+  if (process.env.SERVER_TURBO_KEY != null) {
+    const scContent = process.env.SERVER_TURBO_MD ? `
+#### ${name} 发表评论：
+
+${$(text.replace(/<img.*?src="(.*?)".*?>/g, "![图片]($1)").replace(/<br>/g, "\n")).text().replace(/\n+/g, "\n\n").replace(/\n+$/g, "")}
+
+#### [查看评论](${url + '#' + comment.get('objectId')})` : `
+${name} 发表评论：
+
+${$(text.replace(/<img.*?src="(.*?)".*?>/g, "\n图片: $1\n").replace(/<br>/g, "\n")).text().replace(/\n+/g, "\n\n").replace(/\n+$/g, "")}
+
+查看评论: ${url + '#' + comment.get('objectId')}`
+    axios({
+      method: 'post',
+      url: `https://sctapi.ftqq.com/${process.env.SERVER_TURBO_KEY}.send`,
+      data: `text=咚！「${process.env.SITE_NAME}」上有新评论了&desp=${scContent}`,
+      headers: {
+        'Content-type': 'application/x-www-form-urlencoded'
+      }
+    })
+      .then(function (response) {
+        if (response.status === 200 && response.data.code === 0) {
+          comment.set('isNotified', true)
+          comment.set('wechatNotified', true)
+          console.log('已通过Server酱提醒站长')
+        } else {
+          console.warn('Server酱提醒失败:', response.data)
+        }
+      })
+      .catch(function (error) {
+        console.error('Server酱提醒失败:', error.message)
+      })
+  }
   if (process.env.QMSG_KEY != null) {
     /*
     if (process.env.QQ_SHAKE != null) {
