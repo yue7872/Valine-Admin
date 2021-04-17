@@ -145,11 +145,15 @@ ${$(text.replace(/<img.*?src="(.*?)".*?>/g, "\n图片: $1\n").replace(/<br>/g, "
         })
     }
     */
-    const scContent = `您的 ${process.env.SITE_NAME} 上有新评论了！
-用户：${name}
-评论内容：
-${$(text.replace(/  <img.*?src="(.*?)".*?>/g, "\n[图片]$1\n").replace(/<br>/g, "\n")).text().replace(/\n+/g, "\n").replace(/\n+$/g, "")}
-链接：${url + '#' + comment.get('objectId')}`
+    const scContent = `@face=119@您的 ${process.env.SITE_NAME} 上有新评论了！
+
+@face=183@${name} 发表评论：
+
+@face=77@@face=77@@face=77@@face=77@@face=77@
+${$(text.replace(/<img.*?src="(.*?)".*?>/g, "\n[图片]$1\n").replace(/<br>/g, "\n")).text().replace(/\n+/g, "\n").replace(/\n+$/g, "")}
+@face=76@@face=76@@face=76@@face=76@@face=76@
+
+@face=169@${url + '#' + comment.get('objectId')}`
     axios.get(`https://qmsg.zendee.cn:443/send/${process.env.QMSG_KEY}?msg=${encodeURIComponent(scContent)}`)
       .then(function (response) {
         if (response.status === 200 && response.data.success === true) {
