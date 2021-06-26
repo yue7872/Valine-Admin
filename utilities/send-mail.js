@@ -105,7 +105,7 @@ ${$(text.replace(/<img.*?src="(.*?)".*?>/g, "![图片]($1)").replace(/<br>/g, "\
 #### [查看评论](${url + '#' + comment.get('objectId')})` : `
 ${name} 发表评论：
 
-${$(text.replace(/<img.*?src="(.*?)".*?>/g, "\n图片: $1\n").replace(/<br>/g, "\n")).text().replace(/\n+/g, "\n\n").replace(/\n+$/g, "")}
+$(text.replace(/<img.*?src="(.*?)".*?>/g, "\n图片: $1\n").replace(/<br>/g, "\n")).text().replace(/\n+/g, "\n\n").replace(/\n+$/g, "")
 
 查看评论: ${url + '#' + comment.get('objectId')}`
     axios({
