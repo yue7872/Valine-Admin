@@ -78,7 +78,7 @@ ${text}
     axios({
       method: 'post',
       url: `https://sc.ftqq.com/${process.env.SERVER_KEY}.send`,
-      data: `text=咚！「${process.env.SITE_NAME}」上有新评论了&desp=${scContent}`,
+      data: `text=滴滴滴！「${process.env.SITE_NAME}」上有新评论了&desp=${scContent}`,
       headers: {
         'Content-type': 'application/x-www-form-urlencoded'
       }
@@ -145,18 +145,21 @@ ${text}
         })
     }
     */
-    const scContent = `@face=119@您的 ${process.env.SITE_NAME} 上的这篇文章： 
-      ${url.split('/')[url.split('/').length-2]}
-    有新评论了！
+    const scContent = `@face=119@您的 ${process.env.SITE_NAME} 上的文章： 
+${url.split('/')[url.split('/').length-2]}
+有新评论了！
 
 @face=66@@face=66@@face=66@
 
 ${name} 发表评论：
 
-${text.replace(/<img.*? \/>/g, "![图片]($1)").replace(/<br>/g, "\n").replace(/\n+/g, "\n\n").replace(/\n+$/g, "")}
+${text.replace(/<img.*? \/>/g, " ").replace(/<br>/g, "\n").replace(/\n+/g, "\n\n").replace(/\n+$/g, "").replace("<p>","").replace("</p>","")}
 
 @face=66@@face=66@@face=66@
-${url + '#' + comment.get('objectId')}`
+
+点击链接查看详情：
+
+${url}`
     axios.get(`https://qmsg.zendee.cn:443/send/${process.env.QMSG_KEY}?msg=${encodeURIComponent(scContent)}`)
       .then(function (response) {
         if (response.status === 200 && response.data.success === true) {
