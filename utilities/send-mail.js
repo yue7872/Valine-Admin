@@ -105,7 +105,7 @@ ${$(text.replace(/<img.*?src="(.*?)".*?>/g, "![图片]($1)").replace(/<br>/g, "\
 #### [查看评论](${url + '#' + comment.get('objectId')})` : `
 ${name} 发表评论：
 
-$(text.replace(/<img.*?src="(.*?)".*?>/g, "\n图片: $1\n").replace(/<br>/g, "\n")).text().replace(/\n+/g, "\n\n").replace(/\n+$/g, "")
+${text}
 
 查看评论: ${url + '#' + comment.get('objectId')}`
     axios({
@@ -147,13 +147,14 @@ $(text.replace(/<img.*?src="(.*?)".*?>/g, "\n图片: $1\n").replace(/<br>/g, "\n
     */
     const scContent = `@face=119@您的 ${process.env.SITE_NAME} 上有新评论了！
 
-@face=183@${name} 发表评论：
+@face=66@@face=66@@face=66@
 
-@face=77@@face=77@@face=77@@face=77@@face=77@
-${text}.replace(/<img.*?src="(.*?)".*?>/g, "\n[图片]$1\n").replace(/<br>/g, "\n")).text().replace(/\n+/g, "\n").replace(/\n+$/g, "")
-@face=76@@face=76@@face=76@@face=76@@face=76@
+${name} 发表评论：
 
-@face=169@${url + '#' + comment.get('objectId')}`
+${text}
+
+@face=66@@face=66@@face=66@
+${url + '#' + comment.get('objectId')}`
     axios.get(`https://qmsg.zendee.cn:443/send/${process.env.QMSG_KEY}?msg=${encodeURIComponent(scContent)}`)
       .then(function (response) {
         if (response.status === 200 && response.data.success === true) {
