@@ -145,13 +145,15 @@ ${text}
         })
     }
     */
-    const scContent = `@face=119@您的 ${process.env.SITE_NAME} 上有新评论了！
+    const scContent = `@face=119@您的 ${process.env.SITE_NAME} 上的这篇文章： 
+      ${url.split('/')[url.split('/').length-2]}
+    有新评论了！
 
 @face=66@@face=66@@face=66@
 
 ${name} 发表评论：
 
-${text}
+${text.replace(/<img.*? \/>/g, "![图片]($1)").replace(/<br>/g, "\n").replace(/\n+/g, "\n\n").replace(/\n+$/g, "")}
 
 @face=66@@face=66@@face=66@
 ${url + '#' + comment.get('objectId')}`
