@@ -45,7 +45,7 @@ exports.checkSpam = (comment, ip) => {
           console.log('垃圾评论检测完成，放行~')
         }
       })
-    } else console.log('Akismet key 异常!')
+    } else console.log('未设置垃圾评论检测!')
   })
 }
 exports.submitSpam = (comment) => {
@@ -72,7 +72,7 @@ exports.submitSpam = (comment) => {
           console.log('垃圾评论已经提交!')
         }
       })
-    } else console.log('Akismet key 异常!')
+    } else console.log('未设置垃圾评论检测!')
   })
 }
 exports.submitHam = (comment) => {
@@ -99,6 +99,6 @@ exports.submitHam = (comment) => {
           console.log('评论已经标记为非垃圾!')
         }
       })
-    } else console.log('Akismet key 异常!')
+    } else console.log('未设置垃圾评论检测!')
   })
 }
